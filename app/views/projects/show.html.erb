@@ -1,0 +1,52 @@
+<html>
+  <body>
+
+    <div class="nav">
+      <ul>
+        Ticketing
+        <li><a href=<%=projects_path %>>Projects</a></li>
+        <li>Tickets</li>
+        <li>Tags</li>
+      </ul>
+    </div>
+
+    <div class="project">
+      <h1><%= @project.name %>
+      <p><%= @project.description %></p>
+
+      <ul>
+        <a href="#">Edit</a>
+        <a href="#">Delete</a>
+      </ul>
+    </div>
+
+    <div class="tickets">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Assignee</th>
+            <th>Status</th>
+            <th>Tags</th>
+            <th></th>
+          </tr>
+          <% @project.tickets.each do |ticket| %>
+            <tr>
+              <th><%= ticket.name %></th>
+              <th>Assignee</th>
+              <th><%= ticket.status %></th>
+              <th>Tags</th>
+              <th>
+                <ul>
+                  <a href="#">Edit</a>
+                  <a href="#">Delete</a>
+                </ul>
+              </th>
+            </tr>
+          <% end %>
+        </thead>
+      </table>
+    </div>
+
+  </body>
+</html>
