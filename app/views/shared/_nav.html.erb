@@ -1,0 +1,32 @@
+<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-primary">
+  
+  <strong><%= link_to 'Ticketing', root_path, class: "navbar-brand" %></strong>
+  
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item">
+      <%= link_to 'Projects', projects_path, class: "nav-link" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to 'Tickets', tickets_path, class: "nav-link" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to 'Tags', tags_path, class: "nav-link" %>
+    </li>
+  </ul>
+
+  <ul class="navbar-nav ">
+    <% unless logged_in? %>
+      <li class="nav-item ">
+        <button class="btn btn-lg"><%= link_to 'Login', login_path, class: "nav-link" %></button>
+      </li>
+      <li class="nav-item ">
+        <button class="btn btn-lg"><%= link_to 'Signup', register_path, class: "nav-link" %></button>
+      </li>
+    <% else %>
+      <li class="nav-item ">
+        <span>Logged in as <%= current_user.name %></span>
+        <button class="btn btn-lg"><%= link_to 'Logout', logout_path, class: "nav-link" %></button>
+      </li>
+    <% end %>
+  <ul>
+</nav>

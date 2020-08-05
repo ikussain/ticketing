@@ -1,0 +1,44 @@
+<%= render 'shared/nav'%>
+
+<div class="container">
+  <%= render 'shared/header', title: 'Tickets' %>
+
+  <% if flash[:error].present? %>
+    <p class="alert alert-danger"><%= flash[:error] %></p>
+  <% end %>
+  <% if flash[:success].present? %>
+    <p class="alert alert-success"><%= flash[:success] %></p>
+  <% end %>
+
+  <%= form_tag tickets_path, method: :get, class: 'form-inline my-lg-3' do %>
+    <span>Show tickets from</span>
+    <%= select_tag 'ticket[project_id]', 
+                  options_from_collection_for_select(Project.all, :id, :name, @project_id), 
+                  include_blank: 'All Projects',
+                  class: 'form-control ml-lg-3' %>
+    <span class="ml-lg-3">with status</span>
+    <%= select_tag 'ticket[status]', 
+                  options_for_select(Ticket::OPTIONS.map { |option| [option, option.downcase.split.join('_')]}, @status), 
+                  include_blank: 'Any Status',
+                  class: 'form-control ml-lg-3' %>
+    <span class="ml-lg-3">tagged</span>
+    <%= select_tag 'tag_id', 
+                  options_from_collection_for_select(Tag.order("LOWER(name)"), :id, :name, @tag),
+                  include_blank: '-',
+                  class: 'form-control ml-lg-3' %>
+    <%= button_tag 'Update', class: 'btn btn-primary mx-lg-3' %>
+    <%= link_to 'Clear', tickets_path %>
+  <% end %>
+
+  <% if @tickets.any? %>
+    <%= render 'shared/ticket_list'%>
+  <% else %>
+    <p> No tickets matching the criteria. <%= link_to 'Clear filters and show all tickets', tickets_path %></p>
+  <% end %>
+
+  <button class='btn btn-outline-primary'><%= link_to 'New Ticket', new_ticket_path, class: 'boring' %></button>
+
+</div>
+
+
+

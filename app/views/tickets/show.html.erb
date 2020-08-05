@@ -1,0 +1,49 @@
+<%= render 'shared/nav'%>
+
+<div class="container">
+  <%= render 'shared/header', title: @ticket.name %>
+  <p class="lead"><%= @ticket.body %></p>
+  <p><strong>Tags:</strong> <%= @ticket.tags.to_a.map {|tag| tag.name }.join(', ') %></p>
+
+  <%= link_to 'Edit', edit_ticket_path(@ticket.id) %>
+
+  <table class="table w-100 table-hover table-sm mt-lg-3">
+    <thead class="thead-dark">
+      <tr>
+        <th>Status</th>
+        <th>Creator</th>
+        <th>Assignee</th>
+      <tr>
+    </thead>
+    <tr>
+      <td><%= @ticket.status.capitalize.split('_').join(' ') %></td>
+      <td><%= @ticket.creator.name %></td>
+      <td><%= @ticket.assignee && @ticket.assignee.name %>
+    </tr>
+  </table>
+
+  <h2>Comments</h1>
+
+  <% if flash[:error].present? %>
+    <p class="alert alert-danger"><%= flash[:error] %></p>
+  <% end %>
+  <% if flash[:success].present? %>
+    <p class="alert alert-success"><%= flash[:success] %></p>
+  <% end %>
+
+  <% if @ticket.comments.any? %>
+    <% @ticket.comments.each do |comment| %>
+      <div class="card mb-lg-3">
+        <div class="card-body">
+          <p class="card-text"><%= comment.body %></p>
+          <footer class="blockquote-footer">posted by <%= comment.creator.name %></footer>
+          <%= link_to 'Edit', edit_ticket_comment_path(@ticket, comment) %>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <p>There are no comments.</p>
+  <% end %>
+
+  <%= render 'shared/comment_form' %>
+</div>

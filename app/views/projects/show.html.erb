@@ -1,52 +1,15 @@
-<html>
-  <body>
+<%= render 'shared/nav'%>
 
-    <div class="nav">
-      <ul>
-        Ticketing
-        <li><a href=<%=projects_path %>>Projects</a></li>
-        <li>Tickets</li>
-        <li>Tags</li>
-      </ul>
-    </div>
+<div class="container mt-lg-3">
+  <%= render 'shared/header', title: @project.name %>
+  <p class="lead"><%= @project.description %></p>
 
-    <div class="project">
-      <h1><%= @project.name %>
-      <p><%= @project.description %></p>
+  <ul>
+    <%= link_to 'Edit', edit_project_path(@project) %>
+    <%= link_to 'Delete', project_path(@project), method: :delete, data: {confirm: "Are you sure?" } %>
+  </ul>
+    
 
-      <ul>
-        <a href="#">Edit</a>
-        <a href="#">Delete</a>
-      </ul>
-    </div>
+  <%= render 'shared/ticket_list'%>
 
-    <div class="tickets">
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Assignee</th>
-            <th>Status</th>
-            <th>Tags</th>
-            <th></th>
-          </tr>
-          <% @project.tickets.each do |ticket| %>
-            <tr>
-              <th><%= ticket.name %></th>
-              <th>Assignee</th>
-              <th><%= ticket.status %></th>
-              <th>Tags</th>
-              <th>
-                <ul>
-                  <a href="#">Edit</a>
-                  <a href="#">Delete</a>
-                </ul>
-              </th>
-            </tr>
-          <% end %>
-        </thead>
-      </table>
-    </div>
-
-  </body>
-</html>
+</div>

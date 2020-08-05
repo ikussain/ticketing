@@ -1,0 +1,16 @@
+<%= form_for [@ticket, @comment], class: 'mt-lg-5' do |f| %>
+      <div class="form-group">
+        <%= f.label :body, 'Add a comment' %>
+        <%= f.text_area :body, class: 'form-control'%>
+      </div>
+
+      <div class="form-group">
+        <%= label_tag 'comment[ticket_status]', 'Update ticket status' %>
+        <%= select_tag 'comment[ticket_status]',
+                        options_for_select(Ticket::OPTIONS.map { |option| [option, option.downcase.split.join('_')]}), 
+                        include_blank: 'Do not change',
+                        class: 'form-control' %>
+      </div>
+
+      <%= f.submit(@comment.new_record? ? 'Create Comment' : 'Update Comment', class: 'btn btn-primary btn-lg')%>
+<% end %>

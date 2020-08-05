@@ -1,38 +1,52 @@
-<html>
-  <body>
+<%= render 'shared/nav'%>
 
-    <div class="nav">
-      <ul>
-        Ticketing
-        <li><a href=<%=projects_path %>>Projects</a></li>
-        <li>Tickets</li>
-        <li>Tags</li>
-      </ul>
-    </div>
+<div class="container">
+  <%= render 'shared/header', title: 'Projects' %>
 
-    <div class="header">
-      <h1> Projects </h1>
-    </div>
-
-    <div class="list">
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Open Tickets</th>
-            <th>Total Tickets</th>
-          </tr>
-        </thead>
+  <% if flash[:error].present? %>
+    <p class="alert alert-danger"><%= flash[:error] %></p>
+  <% end %>
+  <% if flash[:success].present? %>
+    <p class="alert alert-success"><%= flash[:success] %></p>
+  <% end %>
+  <% if flash[:notice].present? %>
+    <p class="alert alert-success"><%= flash[:notice] %></p>
+  <% end %>
+  
+  <% if @projects.any? %>
+    <table class="table w-100 table-hover table-sm">
+      <thead class="thead-dark">
+        <tr>
+          <th>Name</th>
+          <th>Open Tickets</th>
+          <th>Total Tickets</th>
+          <% if logged_in? %>
+            <th></th>
+          <% end %>
+        </tr>
+      </thead>
 
         <% @projects.each do |project| %>
-          <td>
-            <a href="<%= project_path(project.id) %>%"><h3><%= project.name %></h3></a>
-            <p><%= project.description %><p>
-          </td>
-          <td><%= project.tickets.size %></td>
-          <td><%= project.tickets.size %></td>
+          <tr>
+            <td>
+              <h3><%= link_to project.name, project_path(project.id)%></h3>
+              <p><%= project.description %><p>
+            </td>
+            <td><%= project.tickets.select { |ticket| ticket.status != 'fixed' }.size %></td>
+            <td><%= project.tickets.size %></td>
+            <% if logged_in? %>
+              <td>
+                <%= link_to 'Edit', edit_project_path(project)%>
+                <%= link_to 'Delete', project_path(project), method: :delete, data: {confirm: "Are you sure?" } %>
+              </td>
+            <% end %>
+          </tr>
         <% end%>
-      </table>
-    </div>
-  </body>
-</html>
+    </table>
+  <% else %>
+    <p class="lead">No projects yet.</p>
+  <% end %>
+
+  <button class='btn btn-outline-primary'><%= link_to 'New Project', new_project_path, class: 'boring' %></button>
+</div>
+

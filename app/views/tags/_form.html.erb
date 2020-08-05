@@ -1,0 +1,9 @@
+<%= form_for @tag do |f| %>
+  <div class="form-group">
+      <%= f.label :name%>
+      <%= f.text_field :name, class: 'form-control' %>
+  </div>
+
+  <%= f.submit(@tag.new_record? ? 'Create Tag' : 'Update Tag', class: 'btn btn-primary btn-lg')%>
+  <%= link_to 'Back', tags_path, class: 'ml-lg-3' %>
+<% end %>

@@ -1,0 +1,10 @@
+<%= render 'shared/nav' %>
+
+<div class="container">
+  <%= render 'shared/header', title: 'New Ticket' %>
+
+  <%= render 'shared/errors', obj: @ticket %>
+  
+  <%= render 'form' %>
+
+<div>

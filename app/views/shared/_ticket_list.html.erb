@@ -1,0 +1,29 @@
+  <table class="table w-100 table-hover table-sm mt-lg-3">
+    <thead class="thead-dark">
+      <tr>
+        <th>Name</th>
+        <th>Assignee</th>
+        <th>Status</th>
+        <th>Tags</th>
+        <% if logged_in? %>
+          <th></th>
+        <% end %>
+      </tr>
+      <% @tickets.each do |ticket| %>
+        <tr>
+          <td><%= link_to ticket.name, ticket_path(ticket.id) %></td>
+          <td><%= ticket.assignee && ticket.assignee.name%></td>
+          <td><%= ticket.status.capitalize.split('_').join(' ') %></td>
+          <td><%= ticket.tags.to_a.map {|tag| tag.name }.join(', ') %></td>
+          <% if logged_in? %>
+            <td>
+              <ul>
+                <%= link_to 'Edit', edit_ticket_path(ticket.id) %>
+                <%= link_to 'Destroy', ticket_path(ticket.id), method: :delete, data: {confirm: "Are you sure?"} %>
+              </ul>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    </thead>
+  </table>

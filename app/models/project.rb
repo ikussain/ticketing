@@ -1,6 +1,5 @@
 class Project < ActiveRecord::Base
-  validates :name, :description, presence: true
-  validates :name, uniqueness: true
+  validates :name, presence: true, length: { minimum: 3 }
 
-  has_many :tickets
+  has_many :tickets, dependent: :destroy
 end

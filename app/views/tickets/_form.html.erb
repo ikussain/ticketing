@@ -1,0 +1,38 @@
+<%= form_for @ticket do |f| %>
+  <div class="form-group mt-lg-3">
+    <%= f.label :project_id, 'Project' %>
+    <%= f.select(:project_id, 
+                 options_from_collection_for_select(Project.all, :id, :name, @ticket.project_id), {},
+                 class: 'form-control') %>
+  </div>
+  <div class="form-group mt-lg-3">
+    <%= f.label :name, 'Name' %>
+    <%= f.text_field :name, class: 'form-control' %>
+  </div>
+  <div class="form-group mt-lg-3">
+    <%= f.label :body, 'Body' %>
+    <%= f.text_area :body, class: 'form-control', rows: '5' %>
+  </div>
+  <div class="form-group mt-lg-3">
+    <%= f.label :status, 'Status' %>
+    <%= f.select :status,
+                 options_for_select(Ticket::OPTIONS.map { |option| [option, option.downcase.split.join('_')]}, @ticket.status), {},
+                 class: 'form_control' %>
+  </div>
+  <div class="form-group mt-lg-3">
+    <%= f.label :assignee_id, 'Assignee' %>
+    <%= f.select :assignee_id, 
+                 options_from_collection_for_select(User.all, :id, :name, @ticket.assignee_id), {},
+                 include_blank: 'No one',
+                 class: 'form-control' %>
+  </div>
+  <div class="form-group mt-lg-3">
+    <%= f.label :tag_ids, 'Tags' %>
+    <%= f.select :tag_ids,
+                 options_from_collection_for_select(Tag.order("LOWER(name)"), :id, :name, @ticket.tag_ids), {},  
+                 class: 'form-control',
+                 multiple: true %>
+  </div>
+
+  <%= f.submit(@ticket.new_record? ? 'Create Ticket' : 'Update Ticket', class: 'btn btn-primary btn-lg')%>
+<% end %>

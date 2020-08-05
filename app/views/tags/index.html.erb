@@ -1,0 +1,45 @@
+<%= render 'shared/nav'%>
+
+<div class="container">
+  <%= render 'shared/header', title: 'Tags' %>
+
+  <% if flash[:error].present? %>
+    <p class="alert alert-danger"><%= flash[:error] %></p>
+  <% end %>
+  <% if flash[:success].present? %>
+    <p class="alert alert-success"><%= flash[:success] %></p>
+  <% end %>
+  
+  <% if @tags.any? %>
+    <table class="table w-100 table-hover table-sm">
+      <thead class="thead-dark">
+        <tr>
+          <th>Name</th>
+          <th>Tickets</th>
+          <% if logged_in? %>
+            <th></th>
+          <% end %>
+        </tr>
+      </thead>
+      <% @tags.each do |tag| %>
+        <tr>
+          <td><%= tag.name %></td>
+          <td><%= link_to tag.tickets.count, "#{tickets_path}?tag_id=#{tag.id}" %></td>
+          <% if logged_in? %>
+            <td>
+              <%= link_to 'Edit', edit_tag_path(tag.id) %>
+              or
+              <%= link_to 'Destroy', tag_path(tag.id), method: :delete, data: { confirm: "Are you sure?" }%>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    </table>
+  <% else %>
+    <p class="lead">No tags yet.</p>
+  <% end %>
+
+  <button class='btn btn-outline-primary'><%= link_to 'New Tag', new_tag_path, class: 'boring' %></button>
+
+</div>
+
