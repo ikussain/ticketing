@@ -1,24 +1,4 @@
 # README
+CRUD app built with Ruby on Rails and Bootstrap. Functionality includes creating projects, tickets for projects, assigning tickets to users, commenting on tickets, and adding tags to them.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Link to [live version](https://desolate-thicket-13926.herokuapp.com/).
